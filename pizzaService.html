@@ -3,44 +3,43 @@
   <head>
     <meta charset="utf-8">
     <title>Pizza Service</title>
-    <style>
-        table, tr, td{border: 1px solid lightgray;}
-        #tabelle tr:nth-of-type(even) td:nth-of-type(even) {background: lightgrey;}
-        #tabelle tr:nth-of-type(even) td:nth-of-type(odd) {background: lightgrey;}
-    </style>
+    <link href="pizzaService.css" rel="stylesheet"></style>
 </head>
 <body>
-
- <form name="Testform">
-  <label>Bitte wählen Sie Ihre Pizza-Bestellung:
-    <select name="Pizza" size="9">
-      <option value="1.01">Pizza Napoli</option>
-      <option value="3.02">Pizza Funghi</option>
-      <option value="3.03">Pizza Mare</option>
-      <option value="3.04">Pizza Tonno</option>
-      <option value="3.05">Pizza Mexicana</option>
-      <option value="3.06">Pizza Regina</option>
-      <option value="3.07">Pizza della Casa</option>
-      <option value="3.08">Pizza Calzone</option>
-      <option value="3.09">Pizza con tutto</option>
-    </select>
-  </label>
-  <button type="button" id="gesamtpreisButton">Gesamtpreis berechnen</button>
-  <button type="button" id="loeschenButton">Bestellung löschen</button>
-
-</form>
-
-<table id="t">
-    <thead>
-        <th>Bestellung</th>
-        <th>Preis</th>
-    </thead>
-    <tbody id="tabelle">
-    </tbody>
-</table>
-<p>Beachten Sie: Wenn Sie die Bestellung löschen, wird die letzte Zeile in der Tabelle gelöscht!</p>
-<p>Ihr Gesamtpreis für diese Bestellung beträgt: </p>
-<output></output>
+  <header>
+    <h3>Kleiner Pizza-Service</h3>
+  </header>
+  <main>
+    <label>Bitte wählen Sie Ihre Pizza-Bestellung:</label>
+    <form name="Testform">
+       <select id="pizzaOptionen" name="Pizza" size="9">
+         <option value="1.01">Pizza Napoli</option>
+         <option value="3.02">Pizza Funghi</option>
+         <option value="3.03">Pizza Mare</option>
+         <option value="3.04">Pizza Tonno</option>
+         <option value="3.05">Pizza Mexicana</option>
+         <option value="3.06">Pizza Regina</option>
+         <option value="3.07">Pizza della Casa</option>
+         <option value="3.08">Pizza Calzone</option>
+         <option value="3.09">Pizza con tutto</option>
+       </select>
+   </form>
+   <button type="button" id="gesamtpreisButton">Gesamtpreis berechnen</button><br>
+   <button type="button" id="loeschenButton">Bestellung löschen</button>
+   <p>Beachten Sie: Wenn Sie die Bestellung löschen, wird die<br>letzte Zeile in der Tabelle gelöscht!</p>
+   <p>Ihr Gesamtpreis für diese Bestellung beträgt: </p>
+ </main>
+  <nav>
+    <table id="tabelleGesamt">
+        <thead>
+            <th>Bestellung</th>
+            <th>Preis</th>
+        </thead>
+        <tbody id="tabelle">
+        </tbody>
+    </table>
+    <output>Gesamptreis</output>
+  </nav>
 <script>
 
   //Eventlistener zur Auflistung ausgewählter Pizzen und Gesamptreis-Berechnung
@@ -85,6 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
   //löscht die letzte Zeile in der Bestellung
   function letzteAngabeLoeschen(){
     tabellenAbfrage.deleteRow(tabellenAbfrage.length -1);
+    document.querySelector('output').innerHTML = null;
+
   }
 })
 </script>
