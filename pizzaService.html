@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="de" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Pizza Service</title>
+    <style>
+        table, tr, td{border: 1px solid lightgray;}
+        #tabelle tr:nth-of-type(even) td:nth-of-type(even) {background: lightgrey;}
+        #tabelle tr:nth-of-type(even) td:nth-of-type(odd) {background: lightgrey;}
+    </style>
+</head>
+<body>
+
+ <form name="Testform">
+  <label>Bitte wählen Sie Ihre Pizza-Bestellung:
+    <select name="Pizza" size="9">
+      <option value="1.01">Pizza Napoli</option>
+      <option value="3.02">Pizza Funghi</option>
+      <option value="3.03">Pizza Mare</option>
+      <option value="3.04">Pizza Tonno</option>
+      <option value="3.05">Pizza Mexicana</option>
+      <option value="3.06">Pizza Regina</option>
+      <option value="3.07">Pizza della Casa</option>
+      <option value="3.08">Pizza Calzone</option>
+      <option value="3.09">Pizza con tutto</option>
+    </select>
+  </label>
+  <button type="button" id="gesamtpreisButton">Gesamtpreis berechnen</button>
+  <button type="button" id="loeschenButton">Bestellung löschen</button>
+
+</form>
+
+<table id="t">
+    <thead>
+        <th>Bestellung</th>
+        <th>Preis</th>
+    </thead>
+    <tbody id="tabelle">
+    </tbody>
+</table>
+<p>Beachten Sie: Wenn Sie die Bestellung löschen, wird die letzte Zeile in der Tabelle gelöscht!</p>
+<p>Ihr Gesamtpreis für diese Bestellung beträgt: </p>
+<output></output>
+<script>
+
+  //Eventlistener zur Auflistung ausgewählter Pizzen und Gesamptreis-Berechnung
+document.addEventListener("DOMContentLoaded", () => {
+  document.Testform.Pizza.addEventListener('change', hinzufuegen);
+  document.getElementById("gesamtpreisButton").addEventListener('click', gesamtpreisBestellung);
+  document.getElementById("loeschenButton").addEventListener('click', letzteAngabeLoeschen);
+
+  var menu = document.Testform.Pizza;
+  var tabellenAbfrage = document.getElementById('tabelle');
+      //clicke in die Tabelle und die Pizza wird sofort zur Auflistung im tbody id="tabelle" hinzugefügt
+      //gleichzeitig wird neue Tabellenzeile generiert und Auswahl darin gespeichert
+  function hinzufuegen(){
+    var element = document.getElementById('tabelle');
+    var newTabRow = document.createElement('tr');
+    newTabRow.insertCell(0).innerHTML = menu.options[menu.selectedIndex].text;
+    newTabRow.insertCell(1).innerHTML = menu.options[menu.selectedIndex].value;
+    element.appendChild(newTabRow);
+  }
+
+  //durch klick auf Button Gesamtpreis berechnen kommt if-else-Abfrage(keine Angabe, eine Angabe, mehr als eine Angabe
+  //ab 2 Angaben wird Gesamtpreis berechnet in for-Schleife mit Begrenzung über Länge der Tabellenzeilen
+  //Umwandlung in Float da vorher String
+  //alle Angaben werden in <output> angezeigt
+  function gesamtpreisBestellung(){
+    var gesamtpreis = 0;
+    if(tabellenAbfrage.rows.length < 1){
+      alert ("Bitte Auswahl treffen!")
+    }
+    else if (tabellenAbfrage.rows.length == 1) {
+      document.querySelector('output').innerHTML = parseFloat(tabellenAbfrage.rows[0].cells[1].innerHTML);
+    }
+    else {
+      for (var i = 0; i < tabellenAbfrage.rows.length; i++){
+        gesamtpreis = parseFloat(tabellenAbfrage.rows[i].cells[1].innerHTML) + gesamtpreis;
+        (gesamtpreis*100)/100;
+      }
+      document.querySelector('output').innerHTML = gesamtpreis;
+    }
+  }
+
+  //löscht die letzte Zeile in der Bestellung
+  function letzteAngabeLoeschen(){
+    tabellenAbfrage.deleteRow(tabellenAbfrage.length -1);
+  }
+})
+</script>
+
+</body>
+</html>
